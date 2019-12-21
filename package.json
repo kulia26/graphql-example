@@ -1,0 +1,37 @@
+{
+  "name": "graphql-example",
+  "version": "1.0.0",
+  "description": "Task implementation for software engineering course",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --entry ./app/public/js/index.js --output-filename bundle.min.js --output-path ./app/public/js ",
+    "start": "npm run init-db && npx nodemon --exec babel-node server.js",
+    "sequelize-skeleton": "npx sequelize init:models; npx sequelize init:config",
+    "init-db": "echo 'DROP DATABASE IF EXISTS api_node_demo; CREATE DATABASE api_node_demo CHARACTER SET utf8 COLLATE utf8_general_ci' | mysql -u root && cd -"
+  },
+  "author": "Bohdan Kulinich",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-boost": "^0.4.7",
+    "apollo-server-express": "^2.9.14",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "mysql2": "^2.0.2",
+    "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "faker": "^4.1.0",
+    "lodash.random": "^3.2.0",
+    "lodash.times": "^4.3.2",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  }
+}
