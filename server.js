@@ -1,51 +1,49 @@
-var express = require('express');
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+import express from "express";
+import { ApolloServer, gql } from "apollo-server-express";
+import faker from "faker";
+import times from "lodash.times";
+import random from "lodash.random";
+import typeDefs from "./schema";
+import resolvers from "./resolvers";
+import db from "./models";
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type RandomDie {
-    numSides: Int!
-    rollOnce: Int!
-    roll(numRolls: Int!): [Int]
-  }
+const server = new ApolloServer({
+  typeDefs: gql(typeDefs),
+  resolvers,
+  context: { db }
+});
 
-  type Query {
-    getDie(numSides: Int): RandomDie
-  }
-`);
+const app = express();
+server.applyMiddleware({ app });
 
-// This class implements the RandomDie GraphQL type
-class RandomDie {
-  constructor(numSides) {
-    this.numSides = numSides;
-  }
+app.use(express.static("app/public"));
 
-  rollOnce() {
-    return 1 + Math.floor(Math.random() * this.numSides);
-  }
+db.sequelize.sync().then(() => {
+  // populate user table with dummy data
+  db.user.bulkCreate(
+    times(10, () => ({
+      name: faker.name.firstName(),
+      phone: faker.phone.phoneNumber(),
+      password: faker.name.lastName()+faker.name.jobTitle(),
+    }))
+  );
+  // populate product table with dummy data
+  db.product.bulkCreate(
+    times(10, () => ({
+      name: faker.commerce.productName(),
+      description: faker.commerce.product(),
+      cost: random(59, 2799)
+    }))
+  );
+  // populate orderItems table with dummy data
+  db.orderItem.bulkCreate(
+    times(10, () => ({
+      userId: random(1, 9),
+      productId: random(1, 9),
+    }))
+  );
 
-  roll({numRolls}) {
-    var output = [];
-    for (var i = 0; i < numRolls; i++) {
-      output.push(this.rollOnce());
-    }
-    return output;
-  }
-}
-
-// The root provides the top-level API endpoints
-var root = {
-  getDie: ({numSides}) => {
-    return new RandomDie(numSides || 6);
-  }
-}
-
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at localhost:4000/graphql');
+  app.listen({ port: 4000 }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  );
+});

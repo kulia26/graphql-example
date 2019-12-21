@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const orderItem = sequelize.define('orderItem', {
+  const OrderItem = sequelize.define('orderItem', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  orderItem.associate = (models) => {
-    orderItem.belongsTo(models.product);
+  OrderItem.associate = (models) => {
+    OrderItem.belongsTo(models.product);
   };
 
-  orderItem.associate = (models) => {
-    orderItem.belongsTo(models.user);
+  OrderItem.associate = (models) => {
+    OrderItem.belongsTo(models.user);
   };
 
-  return orderItem;
+  return OrderItem;
 }

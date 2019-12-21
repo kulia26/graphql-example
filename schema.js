@@ -29,8 +29,7 @@ export default `
     orderItems: [OrderItem!]!
   }
   type Mutation {
-    createPost(title: String, content:String!, authorId: ID!): Post!
-    updatePost(id: ID!, title: String, content:String!): [Int!]!
-    deletePost(id: ID!): Int!
+    createOrderItem(userId: ID!, productId: ID!): OrderItem!
+    deleteOrderItem(id: ID!): Int!
   }
 `;
