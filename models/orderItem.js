@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
+      isCompleted: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       freezeTableName: true,

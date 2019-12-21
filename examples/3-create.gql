@@ -1,0 +1,6 @@
+mutation{
+	createOrderItem(userId:1,productId:1) {
+		userId,
+		productId
+	}
+}

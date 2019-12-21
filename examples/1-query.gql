@@ -1,0 +1,15 @@
+query allOrders{
+  orderItems {
+    id
+    user {
+      id
+      name
+      phone
+    }
+    product{
+      id
+      name
+      cost
+    }
+  }
+}

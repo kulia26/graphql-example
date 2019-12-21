@@ -1,0 +1,6 @@
+mutation{
+	updateOrderItem(id:13,isCompleted:1) {
+		id,
+		isCompleted
+	}
+}

@@ -15,6 +15,7 @@ export default `
   }
   type OrderItem {
     id: ID!
+    isCompleted: Int
     userId: ID!
     user: User!
     productId: ID!
@@ -31,5 +32,6 @@ export default `
   type Mutation {
     createOrderItem(userId: ID!, productId: ID!): OrderItem!
     deleteOrderItem(id: ID!): Int!
+    updateOrderItem(id: ID!, isCompleted: Int!): OrderItem!
   }
 `;

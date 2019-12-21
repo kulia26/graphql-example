@@ -21,8 +21,20 @@ export default {
     createOrderItem: (parent, { userId, productId }, { db }, info) =>
       db.orderItem.create({
         userId: userId,
-        productId: productId
+        productId: productId,
+        isCompleted: null,
       }),
+    updateOrderItem: (parent, {id, isCompleted}, { db }, info) => {
+      db.orderItem.update({
+        isCompleted: isCompleted
+      },
+      {
+        where: {
+          id: id
+        }
+      });
+      return db.orderItem.findByPk(id)
+    },
     deleteOrderItem: (parent, {id}, { db }, info) =>
       db.orderItem.destroy({
         where: {

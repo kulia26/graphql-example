@@ -1,0 +1,15 @@
+query orderById{
+  orderItem(id:1){
+    id
+    user {
+      id
+      name
+      phone
+    }
+    product{
+      id
+      name
+      cost
+    }
+  }
+}

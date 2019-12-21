@@ -1,0 +1,12 @@
+query ordersByUser{
+  users{
+    name,
+    phone
+    orderItems{
+      product{
+        name,
+        cost
+      }
+    }
+  }
+}
